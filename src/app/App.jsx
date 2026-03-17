@@ -1,22 +1,22 @@
 import Loading from '@/shared/ui/Loading';
-import { getPopularAll } from '@/shared/api/tmdb';
-import { useEffect, useState } from 'react';
+import { usePopularAll } from '@/entities/movie/api/usePopularAll';
+import Card from '../entities/Card';
+import { useMovieDetail } from '../entities/movie/api/useMovieDetail';
 
 function App() {
-    const [data, setData] = useState(null);
+    const { all, isPending } = usePopularAll();
+    const { detail, trailer, director } = useMovieDetail('157336');
+    console.log('detail:', detail);
+    console.log('trailer:', trailer);
+    console.log('director:', director);
 
-    useEffect(() => {
-        getPopularAll().then((result) => {
-            console.log('api:', result);
-            setData(result);
-        });
-    }, []);
+    if (isPending) return <Loading />;
 
-    if (!data) return <Loading />;
     return (
         <div>
-            <div>{data.length}개</div>
-            <div>{data[0].title || data[0].name}</div>
+            {all.map((item) => (
+                <Card key={item.id} item={item}></Card>
+            ))}
         </div>
     );
 }

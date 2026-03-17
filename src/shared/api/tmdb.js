@@ -4,7 +4,7 @@ const tmdb = axios.create({
     baseURL: 'https://api.themoviedb.org/3',
     params: {
         api_key: import.meta.env.VITE_TMDB_API_KEY,
-        ianguage: 'ko-KR',
+        language: 'ko-KR',
     },
 });
 
@@ -12,10 +12,12 @@ const tmdb = axios.create({
 export const getPopularAll = () => tmdb.get('/trending/all/day').then((res) => res.data.results);
 
 // 인기 영화
-export const getPopularMovie = () => tmdb.get('/movie/popular').then((item) => ({ ...item, media_type: 'movie' }));
+export const getPopularMovies = () =>
+    tmdb.get('/movie/popular').then((res) => res.data.results.map((item) => ({ ...item, media_type: 'movie' })));
 
 // 인기 tv
-export const getPopularTv = () => tmdb.get('/tv/popular').then((item) => ({ ...item, media_type: 'tv' }));
+export const getPopularTv = () =>
+    tmdb.get('/tv/popular').then((res) => res.data.results.map((item) => ({ ...item, media_type: 'tv' })));
 
 // 영화 상세
 export const getMovieDetail = (id) => tmdb.get(`/movie/${id}`).then((res) => res.data);
