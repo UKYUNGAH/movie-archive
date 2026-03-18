@@ -48,7 +48,7 @@ export default function MovieBanner({ item, fade }) {
                     <span className="text-gray-300 text-sm sm:text-base">{item.media_type.toUpperCase()}</span>
                 </div>
 
-                <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-6 sm:mb-10 md:mb-14 leading-relaxed line-clamp-2 sm:line-clamp-3 md:line-clamp-none">
+                <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-6 sm:mb-10 md:mb-14 leading-relaxed line-clamp-2 sm:line-clamp-3 md:line-clamp-4">
                     {item.overview}
                 </p>
 
