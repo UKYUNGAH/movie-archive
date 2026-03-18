@@ -27,7 +27,7 @@ function SwiperSection({ title, items, showIndex = false }) {
 
             <div className="relative group/section">
                 <div
-                    className={`absolute left-0 top-0 h-[75%] w-16 sm:w-20 md:w-24 z-20 bg-gradient-to-r from-black to-transparent flex items-center transition-opacity duration-300 ${
+                    className={`absolute left-0 top-0 h-[75%] w-16 sm:w-20 md:w-24 z-20 bg-linear-to-r from-black to-transparent flex items-center transition-opacity duration-300 ${
                         isBeginning ? 'opacity-0 pointer-events-none' : 'opacity-0 group-hover/section:opacity-100'
                     }`}
                 >
@@ -40,7 +40,7 @@ function SwiperSection({ title, items, showIndex = false }) {
                 </div>
 
                 <div
-                    className={`absolute right-0 top-0 h-[75%] w-16 sm:w-20 md:w-24 z-20 bg-gradient-to-l from-black to-transparent flex items-center justify-end transition-opacity duration-300 ${
+                    className={`absolute right-0 top-0 h-[75%] w-16 sm:w-20 md:w-24 z-20 bg-linear-to-l from-black to-transparent flex items-center justify-end transition-opacity duration-300 ${
                         isEnd ? 'opacity-0 pointer-events-none' : 'opacity-0 group-hover/section:opacity-100'
                     }`}
                 >

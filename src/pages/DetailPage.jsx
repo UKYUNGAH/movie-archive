@@ -36,13 +36,12 @@ export default function DetailPage({ type }) {
                 {/* 뒤로가기 버튼 */}
                 <button
                     onClick={() => navigate(-1)}
-                    className="absolute top-4 left-4 sm:top-8 sm:left-8 backdrop-blur-md bg-white/10 border boder-white/20 p-2 sm:p-3 rounded-full hover:bg-white/20 transition-colors z-20 cursor-pointer"
+                    className="absolute top-4 left-4 sm:top-8 sm:left-8 backdrop-blur-md bg-white/10 border border-white/20 p-2 sm:p-3 rounded-full hover:bg-white/20 transition-colors z-20 cursor-pointer"
                 >
                     <ArrowLeft className="size-5 sm:size-6" />
                 </button>
 
                 {/* 포스터, 제목, 별점, 장르 */}
-                {/* 포스터 + 제목 /별점 /장르 */}
                 <div className="relative h-full flex items-end">
                     <div className="w-full px-4 sm:px-8 md:px-16 pb-8 md:pb-12 flex flex-row gap-4 sm:gap-6 md:gap-8 items-end">
                         <div className="shrink-0">
@@ -59,24 +58,30 @@ export default function DetailPage({ type }) {
                                 {detail.title || detail.name}
                             </h1>
                             <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-4 md:mb-6">
-                                <div className="flex items-center gap-0.5">
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <span
-                                            key={star}
-                                            className={`${
-                                                star <= Math.round(detail.vote_average / 2)
-                                                    ? 'text-yellow-400'
-                                                    : 'text-gray-600'
-                                            } text-base sm:text-xl md:text-2xl`}
-                                        >
-                                            ★{' '}
+                                {detail.vote_average > 0 ? (
+                                    <>
+                                        <div className="flex items-center gap-0.5">
+                                            {[1, 2, 3, 4, 5].map((star) => (
+                                                <span
+                                                    key={star}
+                                                    className={`${
+                                                        star <= Math.round(detail.vote_average / 2)
+                                                            ? 'text-yellow-400'
+                                                            : 'text-gray-600'
+                                                    } text-base sm:text-xl md:text-2xl`}
+                                                >
+                                                    ★{' '}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <span className="text-yellow-400 font-bold text-sm sm:text-lg md:text-xl">
+                                            {(detail.vote_average / 2).toFixed(1)}
                                         </span>
-                                    ))}
-                                </div>
-                                <span className="text-yellow-400 font-bold text-sm sm:text-lg md:text-xl">
-                                    {(detail.vote_average / 2).toFixed(1)}
-                                </span>
-                                <span className="text-gray-400 text-xs sm:text-sm md:text-base">/ 5.0</span>
+                                        <span className="text-gray-400 text-xs sm:text-sm md:text-base">/ 5.0</span>
+                                    </>
+                                ) : (
+                                    <div className="text-base sm:text-xl md:text-2xl">개봉 예정</div>
+                                )}
                             </div>
                             <div className="flex flex-wrap gap-1 sm:gap-2">
                                 {detail.genres.map((genre, i) => (
@@ -116,8 +121,10 @@ export default function DetailPage({ type }) {
                                 </p>
                                 <strong className="text-sm sm:text-lg font-medium">
                                     {type === 'movie'
-                                        ? `${detail.runtime}분`
-                                        : `시즌 ${detail.number_of_seasons} · ${detail.number_of_episodes}화 `}
+                                        ? detail.runtime > 0
+                                            ? `${detail.runtime}분`
+                                            : '미정'
+                                        : `시즌 ${detail.number_of_seasons} · ${detail.number_of_episodes}화`}
                                 </strong>
                             </div>
                         </div>
@@ -127,7 +134,7 @@ export default function DetailPage({ type }) {
                 {detail.overview && (
                     <div className="mb-8 md:mb-12">
                         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-6">줄거리</h2>
-                        <p className="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed">
+                        <p className="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed break-keep">
                             {detail.overview}
                         </p>
                     </div>

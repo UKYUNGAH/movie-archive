@@ -25,30 +25,39 @@ export default function MovieBanner({ item, fade }) {
                 </h3>
 
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
-                    <div className="flex text-base sm:text-xl">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                            <span
-                                key={star}
-                                className={
-                                    star <= Math.round(item.vote_average / 2) ? 'text-yellow-400' : 'text-gray-600'
-                                }
-                            >
-                                ★
+                    {item.vote_average > 0 ? (
+                        <>
+                            <div className="flex text-base sm:text-xl">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <span
+                                        key={star}
+                                        className={
+                                            star <= Math.round(item.vote_average / 2)
+                                                ? 'text-yellow-400'
+                                                : 'text-gray-600'
+                                        }
+                                    >
+                                        ★
+                                    </span>
+                                ))}
+                            </div>
+                            <span className="text-yellow-400 font-bold text-sm sm:text-base">
+                                {(item.vote_average / 2).toFixed(1)}
                             </span>
-                        ))}
-                    </div>
-                    <span className="text-yellow-400 font-bold text-sm sm:text-base">
-                        {(item.vote_average / 2).toFixed(1)}
-                    </span>
-                    <span className="text-white">•</span>
-                    <span className="text-white text-sm sm:text-base">
-                        {formatDate(item.release_date || item.first_air_date)}
-                    </span>
+                            <span className="text-white">•</span>
+                        </>
+                    ) : (
+                        <>
+                            <span className="text-sm sm:text-base">개봉 예정</span>
+                            <span className="text-white">•</span>
+                        </>
+                    )}
+                    <span className="text-sm sm:text-base">{formatDate(item.release_date || item.first_air_date)}</span>
                     <span className="text-gray-400">•</span>
                     <span className="text-gray-300 text-sm sm:text-base">{item.media_type.toUpperCase()}</span>
                 </div>
 
-                <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-6 sm:mb-10 md:mb-14 leading-relaxed line-clamp-2 sm:line-clamp-3 md:line-clamp-4">
+                <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-6 sm:mb-10 md:mb-14 leading-relaxed line-clamp-2 sm:line-clamp-3 break-keep">
                     {item.overview}
                 </p>
 
